@@ -20,7 +20,7 @@ node {
    }
    stage('Build Docker'){
       
-      docker.withRegistry('<<your-docker-registry>>', '<<your-docker-registry-credentials-id>>') {
+      docker.withRegistry('repository', 'anujsaxenadocker90') {
       
         sh "git rev-parse HEAD > .git/commit-id"
         def commit_id = readFile('.git/commit-id').trim()
