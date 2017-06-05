@@ -19,8 +19,21 @@ node {
       }
    }
    stage('Build Docker'){
-
-           
+      
+      docker.withRegistry('<<your-docker-registry>>', '<<your-docker-registry-credentials-id>>') {
+      
+        sh "git rev-parse HEAD > .git/commit-id"
+        def commit_id = readFile('.git/commit-id').trim()
+        println commit_id
+    
+        def app = docker.build "dummy_project"
+   
+        app.push 'master'
+        app.push "${commit_id}"
+ 
+      
+      }
+      
        }
 
     stage('Deploy'){
